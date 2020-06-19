@@ -19,6 +19,16 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <!--全面屏适配-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.2" />
+
+        <!--小米适配水滴屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+
         <!--引导页-->
         <activity
             android:name=".ui.IndexActivity"

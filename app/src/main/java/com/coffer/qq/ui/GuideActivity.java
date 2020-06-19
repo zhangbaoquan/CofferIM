@@ -2,7 +2,7 @@ package com.coffer.qq.ui;
 
 import android.os.Bundle;
 
-import com.zhangyue.framework.base.BaseUIActivity;
+import com.framework.base.BaseUIActivity;
 
 /**
  * @author：张宝全

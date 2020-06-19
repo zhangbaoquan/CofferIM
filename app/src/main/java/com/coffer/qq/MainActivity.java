@@ -1,8 +1,9 @@
-package com.coffer.qq.ui;
+package com.coffer.qq;
 
 import android.os.Bundle;
 
-import com.framework.base.BaseUIActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author：张宝全
@@ -13,10 +14,10 @@ import com.framework.base.BaseUIActivity;
  * @RevisionDescription：
  */
 
-public class LoginActivity extends BaseUIActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 }

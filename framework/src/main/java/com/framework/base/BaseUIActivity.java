@@ -1,4 +1,4 @@
-package com.zhangyue.framework.base;
+package com.framework.base;
 
 import android.os.Bundle;
 import com.utils.SystemUI;

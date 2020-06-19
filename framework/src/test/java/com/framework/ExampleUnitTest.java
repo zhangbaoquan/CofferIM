@@ -1,4 +1,4 @@
-package com.zhangyue.framework;
+package com.framework;
 
 import org.junit.Test;
 

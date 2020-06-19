@@ -1,4 +1,4 @@
-package com.zhangyue.framework.manager;
+package com.framework.manager;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;

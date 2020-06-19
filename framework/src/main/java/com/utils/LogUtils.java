@@ -2,12 +2,10 @@ package com.utils;
 
 import android.util.Log;
 
-import com.Const;
-import com.zhangyue.framework.BuildConfig;
+import com.framework.BuildConfig;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -15,8 +13,8 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.Const.FILE_NAME;
-import static com.Const.LOG_FILE_NAME;
+import static com.Constants.FILE_NAME;
+import static com.Constants.LOG_FILE_NAME;
 
 /**
  * @author：张宝全
