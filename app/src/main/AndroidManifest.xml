@@ -31,7 +31,7 @@
 
         <!--引导页-->
         <activity
-            android:name=".ui.IndexActivity"
+            android:name=".ui.GuideActivity"
             android:theme="@style/AppThemeFull">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
         </activity>
 
         <activity android:name=".ui.LoginActivity"/>
-        <activity android:name=".ui.GuideActivity"/>
+<!--        <activity android:name=".ui.GuideActivity"/>-->
 
     </application>
 

@@ -85,11 +85,11 @@ public class MediaPlayerManager {
      * 播放
      * @param path 视频资源路径
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void startPlay(AssetFileDescriptor path){
         try {
             mMediaPlayer.reset();
-            mMediaPlayer.setDataSource(path);
+            mMediaPlayer.setDataSource(path.getFileDescriptor(),
+                    path.getStartOffset(),path.getLength());
             mMediaPlayer.prepare();
             mMediaPlayer.start();
             mCurrentStatus = MEDIA_STATUS_PLAY;
