@@ -79,8 +79,8 @@ public class IndexActivity extends AppCompatActivity {
 //                    //跳转到主页
 //                    intent.setClass(this, MainActivity.class);
 //                } else {
-//                    //跳转到登录页
-//                    intent.setClass(this, LoginActivity.class);
+                    //跳转到登录页
+                    intent.setClass(this, LoginActivity.class);
 //                }
             } else {
                 //跳转到主页

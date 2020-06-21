@@ -31,7 +31,7 @@
 
         <!--引导页-->
         <activity
-            android:name=".ui.GuideActivity"
+            android:name=".ui.IndexActivity"
             android:theme="@style/AppThemeFull">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +39,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.LoginActivity"/>
-<!--        <activity android:name=".ui.GuideActivity"/>-->
+        <activity android:name=".ui.LoginActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".ui.GuideActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeFull" />
 
     </application>
 

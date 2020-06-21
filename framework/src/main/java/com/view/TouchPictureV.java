@@ -26,7 +26,7 @@ import static android.graphics.Bitmap.Config.ARGB_8888;
  * @RevisionDescription：
  */
 
-public class TouchPictureCheckView extends View {
+public class TouchPictureV extends View {
 
     private static final String TAG = "TouchPictureCheckView_tag";
 
@@ -82,12 +82,12 @@ public class TouchPictureCheckView extends View {
     private boolean mIsPressMoveInner;
 
 
-    public TouchPictureCheckView(Context context) {
+    public TouchPictureV(Context context) {
         super(context);
         init();
     }
 
-    public TouchPictureCheckView(Context context, @Nullable AttributeSet attrs) {
+    public TouchPictureV(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
