@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
@@ -29,117 +30,177 @@ import java.util.List;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    /**
-     * 声明一个数组将所有需要申请的权限都放入
-     */
-    private String[] permissions = new String[]{Manifest.permission.CAMERA,
+    //申请运行时权限的Code
+    private static final int PERMISSION_REQUEST_CODE = 1000;
+    //申请窗口权限的Code
+    public static final int PERMISSION_WINDOW_REQUEST_CODE = 1001;
+
+    //申明所需权限
+    private String[] mStrPermission = {
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.ACCESS_FINE_LOCATION
+
+    };
+
+    //保存没有同意的权限
+    private List<String> mPerList = new ArrayList<>();
+    //保存没有同意的失败权限
+    private List<String> mPerNoList = new ArrayList<>();
+
+    private OnPermissionsResult permissionsResult;
 
     /**
-     * 创建一个mPermissionList，逐个判断哪些权限未授权，将未授权的权限存储到mPermissionList中
+     * 一个方法请求权限
+     *
+     * @param permissionsResult
      */
-    List<String> mPermissionList = new ArrayList<>();
-
-    /**
-     * 权限请求码
-     */
-    private final int mRequestCode = 100;
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initPermission();
+    protected void request(OnPermissionsResult permissionsResult) {
+        if (!checkPermissionsAll()) {
+            requestPermissionAll(permissionsResult);
+        }
     }
 
+    /**
+     * 判断单个权限
+     *
+     * @param permissions
+     * @return
+     */
+    protected boolean checkPermissions(String permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int check = checkSelfPermission(permissions);
+            return check == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
 
-    /***************   权限申请    **************/
-
-    private void initPermission() {
-        mPermissionList.clear();//清空已经允许的没有通过的权限
-        //逐个判断是否还有未通过的权限
-        for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(this, permissions[i]) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                mPermissionList.add(permissions[i]);//添加还未授予的权限到mPermissionList中
+    /**
+     * 判断是否需要申请权限
+     *
+     * @return
+     */
+    protected boolean checkPermissionsAll() {
+        mPerList.clear();
+        for (int i = 0; i < mStrPermission.length; i++) {
+            boolean check = checkPermissions(mStrPermission[i]);
+            //如果不同意则请求
+            if (!check) {
+                mPerList.add(mStrPermission[i]);
             }
         }
-        //申请权限
-        if (mPermissionList.size() > 0) {//有权限没有通过，需要申请
-            ActivityCompat.requestPermissions(this, permissions, mRequestCode);
-        } else {
-            //权限已经都通过了，可以将程序继续打开了
-            Toast.makeText(BaseActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    /**
-     * 6.不再提示权限时的展示对话框
-     */
-    AlertDialog mPermissionDialog;
-    String mPackName = "coffer.androidjatpack";
-
-    private void showPermissionDialog() {
-        if (mPermissionDialog == null) {
-            mPermissionDialog = new AlertDialog.Builder(this)
-                    .setMessage("已禁用权限，请手动授予")
-                    .setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            cancelPermissionDialog();
-
-                            Uri packageURI = Uri.parse("package:" + mPackName);
-                            Intent intent = new Intent(Settings.
-                                    ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //关闭页面或者做其他操作
-                            cancelPermissionDialog();
-                            finish();
-                        }
-                    })
-                    .create();
-        }
-        mPermissionDialog.show();
-    }
-
-    private void cancelPermissionDialog() {
-        mPermissionDialog.cancel();
+        return mPerList.size() > 0 ? false : true;
     }
 
     /**
-     * 5.请求权限后回调的方法
+     * 请求权限
      *
-     * @param requestCode  是我们自己定义的权限请求码
-     * @param permissions  是我们请求的权限名称数组
-     * @param grantResults 是我们在弹出页面后是否允许权限的标识数组，数组的长度对应的是权限
-     *                     名称数组的长度，数组的数据0表示允许权限，-1表示我们点击了禁止权限
+     * @param mPermissions
      */
+    protected void requestPermission(String[] mPermissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(mPermissions, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * 申请所有权限
+     *
+     * @param permissionsResult
+     */
+    protected void requestPermissionAll(OnPermissionsResult permissionsResult) {
+        this.permissionsResult = permissionsResult;
+        requestPermission((String[]) mPerList.toArray(new String[mPerList.size()]));
+    }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean hasPermissionDismiss = false;//有权限没有通过
-        if (mRequestCode == requestCode) {
-            for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[i] == -1) {
-                    hasPermissionDismiss = true;
-                    break;
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        mPerNoList.clear();
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        //你有失败的权限
+                        mPerNoList.add(permissions[i]);
+                    }
+                }
+                if (permissionsResult != null) {
+                    if (mPerNoList.size() == 0) {
+                        permissionsResult.OnSuccess();
+                    } else {
+                        permissionsResult.OnFail(mPerNoList);
+                    }
                 }
             }
         }
-        if (hasPermissionDismiss) {//如果有没有被允许的权限
-            showPermissionDialog();
-        } else {
-            //权限已经都通过了，可以将程序继续打开了
-            Toast.makeText(BaseActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
-        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    protected interface OnPermissionsResult {
+        void OnSuccess();
+
+        void OnFail(List<String> noPermissions);
+    }
+
+    /**
+     * 判断窗口权限
+     *
+     * @return
+     */
+    protected boolean checkWindowPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(this);
+        }
+        return true;
+    }
+
+    /**
+     * 请求窗口权限
+     */
+    protected void requestWindowPermissions() {
+        Toast.makeText(this, "申请窗口权限，暂时没做UI交互", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+                , Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, PERMISSION_WINDOW_REQUEST_CODE);
+    }
+
+    /**
+     * EventBus的步骤：
+     * 1.注册
+     * 2.声明注册方法 onEvent
+     * 3.发送事件
+     */
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+//        ActivityHelper.getInstance().addActivity(this);
+
+//        LanguaueUtils.updateLanguaue(this);
+//        EventManager.register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        EventManager.unregister(this);
+    }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(MessageEvent event) {
+//        switch (event.getType()) {
+//            case EventManager.EVENT_RUPDATE_LANGUAUE:
+//                LanguaueUtils.updateLanguaue(this);
+//                recreate();
+//                break;
+//        }
+//    }
 
 }
