@@ -31,10 +31,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //V7
     api rootProject.ext.dependencies["appcompat"]
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["rxandroid2"]
+    api rootProject.ext.dependencies["okio"]
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["okhttp3"]
+    api rootProject.ext.dependencies["tagcloud"]
+    api rootProject.ext.dependencies["circleimageview"]
+    api rootProject.ext.dependencies["datepicker"]
+    api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["recyclerview"]
+    api rootProject.ext.dependencies["litepal"]
+    api rootProject.ext.dependencies["eventbus"]
+    api rootProject.ext.dependencies["tablayout"]
+//    api rootProject.ext.dependencies["photoview"]
+    api rootProject.ext.dependencies["3dmap"]
+    api rootProject.ext.dependencies["location"]
+    api rootProject.ext.dependencies["search"]
+    api rootProject.ext.dependencies["bugly"]
+    api rootProject.ext.dependencies["buglyndk"]
+    api rootProject.ext.dependencies["zxing"]
+    api rootProject.ext.dependencies["videoplayer"]
+    api rootProject.ext.dependencies["multidex"]
 }
