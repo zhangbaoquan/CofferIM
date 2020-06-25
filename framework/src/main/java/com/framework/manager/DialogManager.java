@@ -3,7 +3,7 @@ package com.framework.manager;
 import android.content.Context;
 import android.view.Gravity;
 
-import com.framework.R;
+import com.liuguilin.framework.R;
 import com.view.DialogView;
 
 /**

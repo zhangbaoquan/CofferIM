@@ -2,7 +2,8 @@ package com.utils;
 
 import android.util.Log;
 
-import com.framework.BuildConfig;
+
+import com.liuguilin.framework.BuildConfig;
 
 import java.io.BufferedWriter;
 import java.io.File;

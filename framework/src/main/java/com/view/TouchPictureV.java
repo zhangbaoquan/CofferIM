@@ -13,9 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.framework.R;
-
-import static android.graphics.Bitmap.Config.ARGB_8888;
+import com.liuguilin.framework.R;
 
 /**
  * @author：张宝全

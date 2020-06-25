@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.framework.R;
 import com.framework.manager.DialogManager;
+import com.liuguilin.framework.R;
 import com.utils.AnimUtils;
 
 /**

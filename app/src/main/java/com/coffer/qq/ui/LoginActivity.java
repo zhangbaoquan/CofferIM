@@ -115,7 +115,8 @@ public class LoginActivity extends BaseUIActivity implements View.OnClickListene
             @Override
             public void onResult() {
                 DialogManager.getInstance().hide(mCodeView);
-//                LoginActivity.this.sendSMS();
+                SpUtils.getInstance().putString(Constants.SP_TOKEN, "coffer");
+                login();
             }
         });
     }
@@ -127,7 +128,8 @@ public class LoginActivity extends BaseUIActivity implements View.OnClickListene
                 DialogManager.getInstance().show(mCodeView);
                 break;
             case R.id.btn_login:
-                login();
+//                login();
+                DialogManager.getInstance().show(mCodeView);
                 break;
             case R.id.tv_test_login:
 //                startActivity(new Intent(this, TestLoginActivity.class));
